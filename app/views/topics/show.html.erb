@@ -1,0 +1,57 @@
+<%- model_class = Topic -%>
+
+<div class="page-header">
+
+  <%= video_tag(@topic.video_url, :controls => true, :autoplay => true, width: '700', height: '500') %>
+<% if user_signed_in? %>
+  <% if @topic.user == current_user.username then %>
+    <%= link_to t('.編集', :default => t("helpers.links.編集")),
+                edit_topic_path(@topic), :class => 'btn btn-default' %>
+    <%= link_to t('.destroy', :default => t("helpers.links.削除")),
+                topic_path(@topic),
+                :method => 'delete',
+                :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => '削除してもいいですか?')) },
+                :class => 'btn btn-danger' %>
+  <% end %>
+<% end %>
+</div>
+
+
+<tbody>
+<tr>
+  <h1><%= @topic.title  %></h1>
+  
+  <h2><% if user_signed_in? %>
+        <%= image_tag @topic.appicon, width: '40' %>
+      <% end %>
+        <%= @topic.user %></h2>
+</tr>
+</tbody>
+
+
+
+<th>
+<dt><strong><%= model_class.human_attribute_name(:概要) %>:<%= @topic.created_at.strftime('%Y/%m/%d %H:%M') %> </strong></dt>
+  <dd><%= @topic.description %></dd></ul>
+</th>
+
+
+<h3>コメント</h3>
+<ul>
+<% @comments.each do |comment| %>
+  <div>
+    <strong><%= comment.user_name %></strong>
+    <br/>
+    <p>&nbsp;<%= comment.body %></p>
+    <% if user_signed_in? %>
+    <% if comment.user_name == current_user.username then %>
+      <p><%= link_to 'コメント削除', comment_path(comment), method: :delete, data: { confirm: '削除してもよろしいですか？' } %></p>
+    <% end %>
+    <% end %>
+  </div>
+<% end %>
+</ul>
+<% if user_signed_in? %>
+<%= render 'comments/form' %>
+<% end %>
+

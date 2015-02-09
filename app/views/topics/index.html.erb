@@ -1,0 +1,52 @@
+<%- model_class = Topic -%>
+
+<div class="page-header">
+  <h1><%= "動画投稿サイト" =%></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+<% content_for :search do %>
+<%= search_form_for @search do |f| %>
+  <%= f.label :title_cont, 'タイトル' %>
+  <%= f.text_field :title_cont %>
+
+　
+  <%= f.label :user, 'ユーザー' %>
+  <%= f.text_field :user_cont %>
+  
+  
+   <%= f.submit "検索" %>
+  
+  <% end %>
+<% end %>
+      
+  </thead>
+
+  <body>
+    <% @topics.in_groups_of(4) do |group| %>
+    <div class="row">
+      <% group.compact.each do |topic| %>
+      <div class="col-md-3">
+        
+          
+          <strong><font size="3"><%= link_to (topic.title), topic_path(topic) %></strong></font>
+          <%= link_to (video_tag topic.video_url, size: '230'), topic_path(topic) %><br>
+          
+          <%= topic.created_at.strftime('%Y/%m/%d %H:%M') %>
+          <br><%= image_tag topic.appicon, width: '50' %>&nbsp作者：<%= topic.user %>
+          <br>
+          
+          <br>
+          <br>
+       
+      </div>
+      <% end %>
+    </div>
+    <% end %>
+  </body>
+</table>
+
+<br>
+
+

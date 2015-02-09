@@ -1,0 +1,15 @@
+﻿
+
+<p>
+  <strong>ユーザー:</strong>
+  <%= @comment.user_name %>
+</p>
+
+<p>
+  <strong>コメント:</strong>
+  <%= @comment.body %>
+</p>
+
+
+<%= link_to '編集', edit_comment_path(@comment) %> |
+<%= link_to '戻る', :back %>

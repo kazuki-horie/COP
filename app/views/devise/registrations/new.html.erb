@@ -1,0 +1,25 @@
+<h2>サインアップ</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div><%= f.label :メールアドレス %><br />
+  <%= f.email_field :email, autofocus: true %></div>
+
+  <div><%= f.label :ユーザーネーム %><br />
+  <%= f.text_field :username, autofocus: true %></div>
+
+
+  <div><%= f.label :パスワード %> <% if @validatable %><i>(<%= @minimum_password_length %> characters minimum)</i><% end %><br />
+    <%= f.password_field :password, autocomplete: "off" %></div>
+
+  <div><%= f.label :パスワードの確認 %><br />
+    <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
+
+  <div><%= f.label :アイコン画像 %><br />
+    <%= f.file_field :icon %></div>
+
+  <div><%= f.submit "サインアップ" %></div>
+<% end %>
+
+<%= render "devise/shared/links" %>
